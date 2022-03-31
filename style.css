@@ -1,6 +1,35 @@
+html {
+    --bg: #FCFCFC;
+}
+
+.light {
+    --bg: white;
+    --card_1: #F38181;
+    --card_2: #FCE38A;
+    --card_3: #EAFFD0;
+    --card_4: #95E1D3;
+}
+
+
+body{
+    font-family: "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.title{
+    text-align: center;
+    margin: 50px auto;
+}
 #list {
+    margin: 0 5%;
     display: grid;
     grid-auto-columns: 1fr; 
     grid-template-columns: 1fr 1fr 1fr 1fr; 
+    grid-gap: 20px;
+}
+.book {
+    height: 200px;
+    padding: 5px;
 }
 
