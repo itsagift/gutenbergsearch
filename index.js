@@ -1,69 +1,88 @@
-
-/*const request = async () => {
-    let word = "cats";
-    let req = await fetch(`https://api.artic.edu/api/v1/artworks/search?${encodeURIComponent(`params={"q":"${word}","query":{"term":{"is_public_domain":true)}}}`)}`);
-    let res = await req.json();
-    console.log(res)
-}   */
 const list = document.getElementById("list");
-const colors = ["#4E937A", "#849483", "#B4656F", "#948392", "#C7F2A7"];
-const colors2 = ["#264653", "#2A9D8F", "#E9C46A", "#F4A261"];
-const themes = [
-    {
-        name: "light",
-        background: "white",
-        books: ["#F38181", "#FCE38A", "#EAFFD0", "#95E1D3"]
-    },
-    {
-        name: "blue",
-        background: "white",
-        books: ["#F38181", "#FCE38A", "#EAFFD0", "#95E1D3"]
-    },
-    {
-        name: "dark",
-        background: "black",
-        books: ["#F38181", "#FCE38A", "#EAFFD0", "#95E1D3"]
-    }
-]
-const toggleButton = document.getElementById("toggle_theme");
-const radios = document.querySelectorAll('input');
-const html = document.querySelector('html');
+const themeRadios = document.querySelectorAll(".radio_theme");
+const genreRadios = document.querySelectorAll(".radio_genre");
+const themeSelector = document.querySelector(".header_selector");
+const radioContainer = document.querySelector(".header_radios");
+const html = document.querySelector("html");
+const body = document.querySelector("body");
+let selectedTheme = "light";
+let checked = "books";
 
-radios.forEach(function(radio) {
+themeSelector.addEventListener("click", dropDown);
+
+function dropDown() {
+    console.log(radioContainer.classList)
+    if (radioContainer.classList.contains("invisible")) {
+        radioContainer.classList.remove("invisible");
+        } else {
+        radioContainer.classList.add("invisible");
+        }
+}
+
+genreRadios.forEach(function(radio) {
+    radio.addEventListener('change', setGenre);
+});
+
+async function setGenre () {
+    
+    if (this.value) {
+        let req = await fetch(`https://gutendex.com/books/?topic=${this.value}`);
+        let res = await req.json();
+        
+        renderBooks(res.results);
+    }
+    else {
+        let req = await fetch(`https://gutendex.com/books`);
+        let res = await req.json();
+        renderBooks(res.results);
+    }
+} 
+
+themeRadios.forEach(function(radio) {
     radio.addEventListener('change', setTheme);
 });
-function setTheme(name){
+
+function setTheme(){
     if (this.checked) {
-        selectedTheme = themes.filter(theme => theme.name === this.value);
-  } else {
-        selectedTheme = themes.filter(theme => theme.name === name);
-  }
-  console.log(selectedTheme[0].background);
-  html.style.backgroundColor = selectedTheme[0].background;
-  return selectedTheme;
+        selectedTheme = this.value;
+    } 
+    html.className='';
+    html.classList.add(selectedTheme);
 }
 
-
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive
-}
-
-const request = async () => {
-    let req = await fetch("https://gutendex.com/books");
-    let res = await req.json();
-    let bookList = res.results;
-    console.log(bookList)
+const renderBooks = (bookList) =>{
+    list.innerHTML = '';
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+    }
     bookList.forEach((book) => {
         let div = document.createElement("div");
+        let heart = document.createElement("div");
+        let heartContainer = document.createElement("div");
+        let heartLabel = document.createElement("div");
+        let likeCount = 0;
         let h3 = document.createElement("h3");
+        let img = document.createElement("img");
         let bookAuthors = book.authors;
-        div.setAttribute("class", "book");
-        div.style.backgroundColor = selectedTheme[0].books[1]
+        div.setAttribute("class", `book card_${getRandomInt(1,5)}`);
         h3.innerText = book.title;
-        list.append(div)
-        div.append(h3)
+        h3.setAttribute("class", "book_title");
+        heartLabel.innerText = likeCount;
+        heartContainer.setAttribute("class", "book_heart_container")
+        heart.setAttribute("class", "book_heart");
+        heart.addEventListener("click", (evt) => {
+            likeCount ++;
+            if (heart.classList.contains("liked")) {
+            heart.classList.remove("liked");
+            } else {
+            heart.classList.add("liked");
+            }
+            heartLabel.innerText = likeCount;
+        });
+
+        div.append(h3);
         bookAuthors.forEach((author) => {
             const myArray = author.name.split(",");
             let newArray = myArray.reverse().join(" ");
@@ -71,8 +90,12 @@ const request = async () => {
             p.innerText = newArray;
             div.append(p)
         })
-        
+        heartContainer.append(heart, heartLabel)
+        div.append(heartContainer);
+        list.append(div)
     })
-} 
+    
+}
+setGenre()
 setTheme("light")
-request()
+

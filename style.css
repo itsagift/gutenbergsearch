@@ -1,35 +1,183 @@
 html {
-    --bg: #FCFCFC;
+    --bg: #fff;
 }
 
 .light {
     --bg: white;
-    --card_1: #F38181;
-    --card_2: #FCE38A;
-    --card_3: #EAFFD0;
-    --card_4: #95E1D3;
+    --card_1: hsl(0, 80%, 81%);
+    --card_2: hsl(48, 80%, 81%);
+    --card_3: hsl(87, 80%, 81%);
+    --card_4: hsl(169, 80%, 81%);
+    --text: #3E4862;
+    --heart_1: #fd648d;
+    --heart_2: #c45070;
+}
+.dark {
+    --bg: hsl(235, 15%, 20%);
+    --card_1: hsl(286, 25%, 39%);
+    --card_2: hsl(250, 20%, 32%);
+    --card_3: hsl(235, 15%, 26%);
+    --card_4: hsl(270, 20%, 35%);
+    
+    --text: #fff;
+    --heart_1: #fd648d;
+    --heart_2: #c45070;
+}
+.blue {
+    --bg: #eee8d5;
+    --card_1: rgba(211, 54, 130, 0.5);
+    --card_2: rgb(108, 113, 196, 0.5);
+    --card_3: rgb(38, 139, 210, 0.5);
+    --card_4: rgb(42, 161, 152, 0.5);
+    --text: #06394B;
+    --heart_1: #ff97b3;
+    --heart_2: #c45070;
 }
 
+.invisible {
+    display: none;
+}
 
 body{
-    font-family: "Helvetica Neue", sans-serif;
+    font-family: "Quattrocento", serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: var(--bg);
+    color: var(--text);
 }
 .title{
+    font-size: 48px;
     text-align: center;
-    margin: 50px auto;
+    margin: 25px auto;
 }
+.header{
+    padding: 5px 0px 5px 10px;
+    height: 80px;
+}
+.header_selector{
+    display: flex;
+    align-items: center;
+}
+.header_icon{
+    width: 40px;
+}
+.lineart{
+    fill: var(--text);
+}
+.header_title{
+    font-weight: 700;
+    text-transform: uppercase;
+    
+}
+
 #list {
-    margin: 0 5%;
+    margin: 0 5% 50px 5%;
     display: grid;
     grid-auto-columns: 1fr; 
     grid-template-columns: 1fr 1fr 1fr 1fr; 
     grid-gap: 20px;
 }
 .book {
-    height: 200px;
-    padding: 5px;
+    height: 250px;
+    padding: 0px 10px;
+    transition: 0.2s all;
+    position: relative;
+}
+.book:hover{
+    background-color: var(--bg);
+    transition: 0.2s all;
+}
+.book_title{
+    font-family: 'Merriweather', serif;
+    line-height: 100%;
+    font-size: 16px;
 }
 
+.card_1{
+    background-color: var(--card_1);
+    border: 1px solid var(--card_1);
+}
+.card_2{
+    background-color: var(--card_2);
+    border: 1px solid var(--card_2);
+}
+.card_3{
+    background-color: var(--card_3);
+    border: 1px solid var(--card_3);
+}
+.card_4{
+    background-color: var(--card_4);
+    border: 1px solid var(--card_4);
+}
+#genres {
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+#genres input[type="radio"]{
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--bg);
+    margin: 0;
+    padding: 0 5px;
+}
+#genres label{
+    font-size: 18px;
+    font-family: 'Merriweather';
+    padding: 10px;
+    font-weight: 300;
+}
+#genres label:hover{
+    cursor: pointer;
+}
+#genres input:checked + label{
+    font-weight: 700;
+    background-color: var(--card_4);
+    color: var(--text);
+}
+
+.book_heart {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    bottom: 5px;
+  }
+.book_heart:before {
+    position: absolute;
+    top: 0;
+    left: 11px;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+    width: 12px;
+    height: 17px;
+    border-radius: 6px 6px 0 0;
+    background-color: var(--heart_1);
+    content: "";
+    cursor: pointer;
+    transition: background .2s;
+    
+}
+.book_heart:after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin :100% 100%;
+    width: 12px;
+    height: 17px;
+    border-radius: 6px 6px 0 0;
+    background-color: var(--heart_1);
+    content: "";
+    cursor: pointer;
+    transition: background .2s;
+    
+  }
+.book_heart.liked::before,
+.book_heart.liked::after {
+    background-color: var(--heart_2);
+  
+}
+.book_heart.liked {
+    animation: liked .2s ease;
+  }
