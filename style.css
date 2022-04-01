@@ -29,7 +29,7 @@ html {
     --card_2: rgb(108, 113, 196, 0.5);
     --card_3: rgb(38, 139, 210, 0.5);
     --card_4: rgb(42, 161, 152, 0.5);
-    --text: #06394B;
+    --text: #073642;
     --heart_1: #ff97b3;
     --heart_2: #c45070;
 }
@@ -110,38 +110,74 @@ body{
     background-color: var(--card_4);
     border: 1px solid var(--card_4);
 }
-#genres {
-    margin-bottom: 25px;
+.genres_radio {
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
 }
-#genres input[type="radio"]{
+.genres_radio input[type="radio"]{
     -webkit-appearance: none;
     appearance: none;
     background-color: var(--bg);
     margin: 0;
     padding: 0 5px;
 }
-#genres label{
+.genres_radio label{
     font-size: 18px;
     font-family: 'Merriweather';
     padding: 10px;
     font-weight: 300;
 }
-#genres label:hover{
+.genres_radio label:hover{
     cursor: pointer;
 }
-#genres input:checked + label{
+.genres_radio input:checked + label{
     font-weight: 700;
     background-color: var(--card_4);
     color: var(--text);
 }
-
-.book_heart {
+.genres_input{
+    font-family: 'Merriweather';
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+.input_label{
+    margin-right:10px
+}
+button{
+    background: none;
+    border: 1px solid var(--text);
+    display: flex;
+    align-items: center;
+}
+input[type="text"]{
+    font-family: 'Merriweather';
+    font-weight: 300;
+    font-size: inherit;
+    border: 1px solid var(--text);
+    background-color: var(--bg);
+    margin-right: 10px;
+}
+input::placeholder{
+    color: var(--text);
+    opacity: 0.6;
+}
+.submit_button_img{
+    background-color: #fff;
+    height:20px;
+}
+.book_heart_container{
     position: absolute;
+    bottom: 5px;
+    display: flex;
+}
+.book_heart {
     width: 25px;
     height: 25px;
-    bottom: 5px;
   }
 .book_heart:before {
     position: absolute;

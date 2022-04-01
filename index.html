@@ -117,7 +117,7 @@
     </header>
     
     <h1 class="title">Project Gutenberg</h1>
-    <nav id="genres">
+    <nav class="genres_radio">
         <input type="radio" class="radio_genre" id="popular_genre" name="genre" value="" checked>
         <label for="popular_genre">Popular</label>
         <input type="radio" class="radio_genre" id="scifi_genre" name="genre" value="science fiction">
@@ -127,6 +127,13 @@
         <input type="radio" class="radio_genre" id="childrens_genre" name="genre" value="children">
         <label for="childrens_genre">Children's</label>
     </nav>
+    <form class="genres_input">
+      <label class="input_label" for="input_text">Or enter a genre here:</label>
+      <input type="text" id="input_text" placeholder="Love stories">
+      <button id="submit_button" class="submit_button" type="submit" value="Search">
+        <img class="submit_button_img" src="images/icons8-search-30.png"/>
+      </button> 
+    </form>
     <div id="list"></div>
     <script src="index.js"></script>
 </body>

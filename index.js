@@ -3,6 +3,9 @@ const themeRadios = document.querySelectorAll(".radio_theme");
 const genreRadios = document.querySelectorAll(".radio_genre");
 const themeSelector = document.querySelector(".header_selector");
 const radioContainer = document.querySelector(".header_radios");
+const genreForm = document.querySelector(".genres_input");
+const inputText = document.querySelector("#input_text");
+const submitButton = document.querySelector(".submit_button");
 const html = document.querySelector("html");
 const body = document.querySelector("body");
 let selectedTheme = "light";
@@ -19,16 +22,44 @@ function dropDown() {
         }
 }
 
+genreForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    console.log(inputText.value)
+    setGenreInput(inputText.value)
+})
+
 genreRadios.forEach(function(radio) {
     radio.addEventListener('change', setGenre);
 });
 
+function handleError(err) {
+    console.log('Ohhhh nooo');
+    console.log(err);
+  }
+
+function setGenreInput(name){
+    if (name){
+        console.log(name)
+        fetch(`https://gutendex.com/books/?topic=${name}`).then(async response => {
+            try {
+             const data = await response.json()
+             renderBooks(data.results);
+           } catch(error) {
+             alert("Oops!")
+           }
+          })
+    }
+    else {
+        alert("Not a valid genre.")
+    }
+}
+
 async function setGenre () {
-    
     if (this.value) {
         let req = await fetch(`https://gutendex.com/books/?topic=${this.value}`);
+        console.log(req)
         let res = await req.json();
-        
+        console.log(res)
         renderBooks(res.results);
     }
     else {
@@ -73,11 +104,12 @@ const renderBooks = (bookList) =>{
         heartContainer.setAttribute("class", "book_heart_container")
         heart.setAttribute("class", "book_heart");
         heart.addEventListener("click", (evt) => {
-            likeCount ++;
             if (heart.classList.contains("liked")) {
             heart.classList.remove("liked");
+            likeCount = 0;
             } else {
             heart.classList.add("liked");
+            likeCount = 1;
             }
             heartLabel.innerText = likeCount;
         });
