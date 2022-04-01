@@ -167,8 +167,14 @@ input::placeholder{
     opacity: 0.6;
 }
 .submit_button_img{
-    background-color: #fff;
-    height:20px;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg);
+    width:20px;
+}
+.img_fill{
+    width: 20px;
+    fill: var(--text);
 }
 .book_heart_container{
     position: absolute;
